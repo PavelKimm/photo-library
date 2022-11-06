@@ -1,0 +1,17 @@
+{% extends "photos/base.html" %}
+{% block content %}
+    {% for photo in photos %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="photo-metadata">
+                    <a class="mr-2" href="#">{{ photo.author }}</a>
+                    <small class="text-muted">{{ photo.created_at }}</small>  {# photo.created_at|date:"F d, Y" #}
+                </div>
+                {% if photo.caption %}
+                    <div>{{ photo.caption }}</div>
+                {% endif %}
+                <p class="photo-content">{{ photo.file }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

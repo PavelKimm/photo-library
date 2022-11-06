@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # third-party apps
+    "crispy_forms",
+    # project apps
+    "users",
+    "photos",
 ]
 
 MIDDLEWARE = [
@@ -121,3 +126,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# enabling bootstrap styles
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = 'home-page'  # redirection after log in
+LOGIN_URL = 'login'  # redirect users to login page when need it

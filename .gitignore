@@ -158,5 +158,5 @@ pip-wheel-metadata/
 
 static/
 *.pem
-media/
+#media/
 db-data/

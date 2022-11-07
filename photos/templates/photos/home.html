@@ -3,15 +3,29 @@
     {% for photo in photos %}
         <article class="media content-section">
             <div class="media-body">
-                <div class="photo-metadata">
-                    <a class="mr-2" href="#">{{ photo.author }}</a>
-                    <small class="text-muted">{{ photo.created_at }}</small>  {# photo.created_at|date:"F d, Y" #}
-                </div>
-                {% if photo.caption %}
-                    <div>{{ photo.caption }}</div>
+                <img class="photo-content" src="{{ photo.file.url }}" alt="photo">
+
+                {% if user.is_authenticated %}
+                    <div class="photo-metadata">
+                        <img class="rounded-circle article-img" src="{{ photo.author.profile.image.url }}"
+                             alt="profile-image">
+                        <a class="mr-2" href="#">{{ photo.author }}</a>
+                        <small class="text-muted">{{ photo.created_at|date:"F d, Y" }}</small>
+                    </div>
+                    {% if photo.caption %}
+                        <div>{{ photo.caption }}</div>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <div>
+                            <a class="btn btn-danger btn-sm m-1 float-right" href="{% url 'photo-delete' photo.id %}">Delete</a>
+                            <a class="btn btn-secondary btn-sm m-1 float-right"
+                               href="{% url 'photo-update' photo.id %}">Edit</a>
+                        </div>
+                    {% endif %}
                 {% endif %}
-                <p class="photo-content">{{ photo.file }}</p>
             </div>
         </article>
     {% endfor %}
+
+    {% include "photos/paginator.html" %}
 {% endblock content %}

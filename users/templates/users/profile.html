@@ -1,16 +1,41 @@
 {% extends "photos/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Profile</h1>
+    {#    <h1>Profile</h1>#}
+    {#    <div class="content-section">#}
+    {#        <div class="media">#}
+    {#            <img alt="image" class="rounded-circle account-img" src="{{ user.profile.image.url }}">#}
+    {#            <div class="media-body">#}
+    {#                <h2 class="account-heading">{{ user.username }}</h2>#}
+    {#                <p class="text-secondary">{{ user.email }}</p>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <form method="POST" enctype="multipart/form-data">#}
+    {#            {% csrf_token %}#}
+    {#            <fieldset class="form-group">#}
+    {#                {{ u_form|crispy }}#}
+    {#                {{ p_form|crispy }}#}
+    {#            </fieldset>#}
+    {#            <div class="form-group">#}
+    {#                <button class="btn btn-outline-info" type="submit">Update</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
 
-    <div class="content-section">
-        <div class="media">
-            <img alt="image" class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+    <h1 class="mb-3">Your photos, {{ user.username }} ({{ page_obj.paginator.count }})</h1>
+    {% for photo in photos %}
+        <article class="media content-section">
             <div class="media-body">
-                <h2 class="account-heading">{{ user.username }}</h2>
-                <p class="text-secondary">{{ user.email }}</p>
+                <img class="rounded-circle article-img" src="{{ photo.author.profile.image.url }}">
+                <a class="mr-2" href="#">{{ photo.author }}</a>
+                <small class="text-muted">{{ photo.created_at|date:"F d, Y" }}</small>
+                <img class="photo-content" src="{{ photo.file.url }}" alt="photo">
+                <div><span>{{ photo.caption }}</span></div>
+                <a class="btn btn-danger btn-sm m-1 float-right" href="{% url 'photo-delete' photo.id %}">Delete</a>
+                <a class="btn btn-secondary btn-sm m-1 float-right" href="{% url 'photo-update' photo.id %}">Edit</a>
             </div>
-        </div>
-        <!-- Place form here -->
-    </div>
+        </article>
+    {% endfor %}
+
+    {% include "photos/paginator.html" %}
 {% endblock content %}
